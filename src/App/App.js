@@ -16,8 +16,25 @@ class App extends Component {
     };
 
     componentDidMount() {
-        // fake date loading from API call
-        setTimeout(() => this.setState(dummyStore), 600);
+       Promise.all([ 
+        fetch(`${config.API_ENDPOINT}/notes`),
+        fetch(`${config.API_ENDPOINT}/folders`)
+       ])
+       .then(([notesRes, folderRes]) =>{
+        if(!notesRes.ok)
+            return notesRes.json().then(event => Promise.reject(event));
+        if(!foldersRes.ok)
+            return foldersRes.json().then(event => Promise.reject(event));
+        return Promise.all([notesRes.json(), folderRes.json()]); 
+       })
+       
+       .then(([notes, folders]) => {
+           this.setState({notes, folders})
+       })
+       .catch(error => {
+           console.log({error})
+       });
+        // setTimeout(() => this.setState(dummyStore), 600);
     }
 
     renderNavRoutes() {
