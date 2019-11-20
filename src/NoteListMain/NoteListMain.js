@@ -12,6 +12,7 @@ export default class NoteListMain extends Component {
 
   render() {
     const { notes } = this.context
+    console.log( notes )
 
     return ( <section className='NoteListMain'>
       <ul>
