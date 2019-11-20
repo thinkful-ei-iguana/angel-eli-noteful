@@ -12,14 +12,23 @@ export default class NoteListMain extends Component {
 
   render() {
     const { notes } = this.context
-    console.log( notes )
+    const { history } = this.props
+    console.log( this.props.history )
 
     return ( <section className='NoteListMain'>
       <ul>
         {
-          notes.map( note => <li key={note.id}>
-            <Note id={note.id} name={note.name} modified={note.modified}/>
-          </li> )
+          notes.map( note => 
+            <li 
+              key={note.id}>
+              <Note 
+                id={note.id} 
+                name={note.name} 
+                history={history} 
+                modified={note.modified}
+              />
+          </li> 
+          )
         }
       </ul>
       <div className='NoteListMain__button-container'>
